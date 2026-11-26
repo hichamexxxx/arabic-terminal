@@ -22,6 +22,15 @@ jobs:
     - name: Setup Android SDK
       uses: android-actions/setup-android@v4.0.4
 
+    # الخطوة الجديدة: إنشاء ملف debug.keystore مؤقت
+    - name: Generate Debug Keystore
+      run: |
+        keytool -genkeypair -v \
+          -keystore debug.keystore \
+          -storepass android -keypass android \
+          -alias androiddebugkey -keyalg RSA -keysize 2048 -validity 10000 \
+          -dname "CN=Android Debug,O=Android,C=US"
+
     - name: Generate Gradle Wrapper
       run: gradle wrapper
 
